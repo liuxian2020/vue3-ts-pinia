@@ -37,12 +37,8 @@ const guessRef = ref<XtxGuessInstance>()
 const onScrolltolower = () => {
   guessRef.value?.getMore()
 }
-// import * as onegame from './onegame_sdk_v1.0.0.js'
-// const onegame = window.require('./onegame_sdk_v1.0.0.js')
-// import {onegame} from './onegame_sdk_v1.0.0.js'
 // 自定义下拉被触发
 const onRefresherrrefresh = async () => {
-  console.log('下拉刷新')
   isTriggered.value = true
   guessRef.value?.resetData()
   await Promise.all([getHomeBannerData(), getCategoryData(), getHotPanelData(),  guessRef.value?.getMore()])
@@ -51,8 +47,6 @@ const onRefresherrrefresh = async () => {
 const isTriggered = ref(false)
 // 页面加载
 onLoad(() => {
-  // const og = window.onegame_sdk.default
-  // og.callbackToLogin()
   getHomeBannerData()
   getCategoryData()
   getHotPanelData()

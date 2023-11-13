@@ -1,6 +1,6 @@
 import { http } from '@/utils/http'
 import type { PageParams } from '@/types/global'
-import type { HotResult } from '@/types/home'
+import type { HotResult } from '@/types/hot'
 // 首页广告区域
 type HotParams = PageParams & {
   subType?: string

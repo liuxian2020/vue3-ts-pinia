@@ -1,7 +1,8 @@
 // /home/category/mutli
-import { http } from "@/utils/http"
+import type { CategoryItem } from '@/types/category'
+import { http } from '@/utils/http'
 export const getCategoryTopAPI = () => {
-  return http<[]>({
+  return http<CategoryItem[]>({
     method: 'GET',
     url: '/category/top',
   })

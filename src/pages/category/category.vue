@@ -55,7 +55,7 @@ onLoad(() => {
         <!-- 焦点图 -->
         <XtxSwiper class="banner" :list="bannerList" />
         <!-- 内容区域 -->
-        <view class="panel" v-for="item in activeChildList" :key="item">
+        <view class="panel" v-for="item in activeChildList" :key="item.id">
           <view class="title">
             <text class="name">{{ item.name }}</text>
             <navigator class="more" hover-class="none">全部</navigator>

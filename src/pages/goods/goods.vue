@@ -8,12 +8,12 @@ const query = defineProps<{
 import { ref } from 'vue'
 import { getGoodsAPI } from '@/services/goods'
 import { onLoad } from '@dcloudio/uni-app'
+import ServicePanel from './components/ServicePanel.vue'
+import AddressPanel from './components/AddressPanel.vue'
 const goodData = ref<GoodsResult>()
 const getGoodsData = () => {
   getGoodsAPI(query.id).then((res) => {
-    console.log(res.result, '====res')
     goodData.value = res.result
-    console.log(goodData, '====ggg')
   })
 }
 onLoad(() => {
@@ -30,6 +30,17 @@ const onTapImage = (url: string) => {
     current: url,
     urls: goodData.value!.mainPictures,
   })
+}
+// 服务
+const popup = ref<{
+  open: (type?: UniHelper.UniPopupType) => void
+  close: () => void
+}>()
+const popupName = ref<'address' | 'service'>()
+const handleService = (name: typeof popupName.value) => {
+  // 修改弹出层名称
+  popupName.value = name
+  popup.value.open()
 }
 </script>
 
@@ -69,11 +80,13 @@ const onTapImage = (url: string) => {
         </view>
         <view class="item arrow">
           <text class="label">送至</text>
-          <text class="text ellipsis"> 请选择收获地址 </text>
+          <text class="text ellipsis" @tap="handleService('address')"> 请选择收获地址 </text>
         </view>
         <view class="item arrow">
           <text class="label">服务</text>
-          <text class="text ellipsis"> 无忧退 快速退款 免费包邮 </text>
+          <text class="text ellipsis" @tap="handleService('service')">
+            无忧退 快速退款 免费包邮
+          </text>
         </view>
       </view>
     </view>
@@ -115,6 +128,12 @@ const onTapImage = (url: string) => {
       </view>
     </view>
   </scroll-view>
+
+  <uni-popup ref="popup" type="bottom" background-color="#fff">
+    <!-- 底部弹出 Popup -->
+    <ServicePanel v-if="popupName === 'service'" @close="popup?.close()"></ServicePanel>
+    <AddressPanel v-if="popupName === 'address'" @close="popup?.close()"></AddressPanel>
+  </uni-popup>
 
   <!-- 用户操作 -->
   <view class="toolbar" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">

@@ -1,13 +1,23 @@
 <script setup lang="ts">
-import { onLoad } from '@dcloudio/uni-app'
-
-// 获取 code 登录凭证
-let code = ''
-onLoad(async () => {
-  const res = await wx.login()
-  code = res.code
-  console.log(code, '===ccc')
-})
+import { getLoginAPI } from '@/services/login'
+import type { loginResult } from '@/types/login'
+import { ref } from 'vue'
+import { useMemberStore } from '@/stores'
+let getLoginResult = ref<loginResult>()
+const getLoginData = () => {
+  getLoginAPI('18888888888').then((res) => {
+    uni.showToast({
+      icon: 'success',
+      title: '登录成功',
+    })
+    getLoginResult.value = res.result
+    const memberStore = useMemberStore()
+    memberStore.setProfile(res.result)
+    setTimeout(() => {
+      uni.switchTab({ url: '/pages/my/my' })
+    }, 200)
+  })
+}
 </script>
 
 <template>
@@ -32,7 +42,7 @@ onLoad(async () => {
         </view>
         <view class="options">
           <!-- 通用模拟登录 -->
-          <button>
+          <button @tap="getLoginData">
             <text class="icon icon-phone">模拟快捷登录</text>
           </button>
         </view>

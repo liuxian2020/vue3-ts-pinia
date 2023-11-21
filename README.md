@@ -7,6 +7,7 @@
 2、封装统一的 http 请求函数
 3、使用 pinia 进行持久化存储
 4、大图预览 uni.previewImage
+5、分包加载 preload
 
 ### 技术栈
 

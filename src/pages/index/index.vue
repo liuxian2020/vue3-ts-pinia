@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import CustomNavbar from './components/CustomNavbar.vue'
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad } from '@dcloudio/uni-app'
 import type { BannerItem, CategoryItem, HotPanelItem } from '@/types/home'
 import { ref } from 'vue'
 import { getHomeBannerAPI, getCategoryAPI, getHotPanelAPI } from '@/services/home'
@@ -17,19 +17,19 @@ let bannerList = ref<BannerItem[]>([
   // }
 ])
 // 获取banner数据
-const getHomeBannerData = async() => {
+const getHomeBannerData = async () => {
   const res = await getHomeBannerAPI()
   bannerList.value = res.result
 }
 let categoryList = ref<CategoryItem[]>([])
 // 获取分类数据
-const getCategoryData = async() => {
+const getCategoryData = async () => {
   const res = await getCategoryAPI()
   categoryList.value = res.result
 }
 let hotPanelList = ref<HotPanelItem[]>([])
 // 获取热图数据
-const getHotPanelData = async() => {
+const getHotPanelData = async () => {
   const res = await getHotPanelAPI()
   hotPanelList.value = res.result
 }
@@ -41,7 +41,12 @@ const onScrolltolower = () => {
 const onRefresherrrefresh = async () => {
   isTriggered.value = true
   guessRef.value?.resetData()
-  await Promise.all([getHomeBannerData(), getCategoryData(), getHotPanelData(),  guessRef.value?.getMore()])
+  await Promise.all([
+    getHomeBannerData(),
+    getCategoryData(),
+    getHotPanelData(),
+    guessRef.value?.getMore(),
+  ])
   isTriggered.value = false
 }
 const isTriggered = ref(false)
@@ -55,23 +60,18 @@ onLoad(() => {
 
 <template>
   <!-- 头部 -->
-   <CustomNavbar></CustomNavbar>
-   <!-- 轮播图 -->
-   <scroll-view
-   refresher-enabled
-   @refresherrefresh="onRefresherrrefresh"
-   :refresher-triggered="isTriggered"
-   @scrolltolower="onScrolltolower"
-   scroll-y
-   class="scrollView">
-     <XtxSwiper :list="bannerList"></XtxSwiper>
-     <!-- 分类 -->
-     <CategoryPanel :list="categoryList"></CategoryPanel>
-     <!-- 热门推荐 -->
-     <HotPanel :list="hotPanelList"></HotPanel>
-     <!-- 猜你喜欢 -->
-     <XtxGuess ref="guessRef"></XtxGuess>
-   </scroll-view>
+  <CustomNavbar></CustomNavbar>
+  <!-- 轮播图 -->
+  <scroll-view refresher-enabled @refresherrefresh="onRefresherrrefresh" :refresher-triggered="isTriggered"
+    @scrolltolower="onScrolltolower" scroll-y class="scrollView">
+    <XtxSwiper :list="bannerList"></XtxSwiper>
+    <!-- 分类 -->
+    <CategoryPanel :list="categoryList"></CategoryPanel>
+    <!-- 热门推荐 -->
+    <HotPanel :list="hotPanelList"></HotPanel>
+    <!-- 猜你喜欢 -->
+    <XtxGuess ref="guessRef"></XtxGuess>
+  </scroll-view>
 </template>
 
 <style lang="scss">
@@ -82,6 +82,7 @@ page {
   flex-direction: column;
   height: 100%;
 }
+
 .scrollView {
   flex: 1;
 }

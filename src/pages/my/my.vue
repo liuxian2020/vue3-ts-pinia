@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import type XtxGuessInstance from '@/components/components'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 // 订单选项
@@ -10,9 +12,9 @@ const orderTypes = [
 ]
 import { useMemberStore } from '@/stores'
 const memberStore = useMemberStore()
-
+const guessRef = ref<XtxGuessInstance>()
 const onScrolltolower = () => {
-  console.log('触底了---')
+  guessRef.value?.getMore()
 }
 </script>
 

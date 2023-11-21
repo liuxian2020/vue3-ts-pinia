@@ -92,5 +92,33 @@
 				"selectedIconPath": "static/tabs/user_selected.png"
 			}
 		]
+	},
+	"subPackages": [
+		{
+			"root": "pagesMember",
+			"pages": [
+				{
+					"path": "settings/settings",
+					"style": {
+						"navigationBarTitleText": "设置"
+					}
+				},
+				{
+					"path": "profile/profile",
+					"style": {
+						"navigationBarTitleText": "会员页面"
+					}
+				}
+			]
+		}
+	],
+	// 分包加载
+	"preloadRule": {
+		"pages/my/my": {
+			"network": "wifi",
+			"packages": [
+				"pagesMember"
+			]
+		}
 	}
 }

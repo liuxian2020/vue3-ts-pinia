@@ -106,6 +106,7 @@
 				{
 					"path": "profile/profile",
 					"style": {
+            "navigationStyle": "custom",
 						"navigationBarTitleText": "会员页面"
 					}
 				}

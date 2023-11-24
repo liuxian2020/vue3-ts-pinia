@@ -6,3 +6,13 @@ export const getMemberProfileApi = () => {
     url: '/member/profile',
   })
 }
+
+// /member/profile
+export const putMemberProfileApi = (data) => {
+  // PUT
+  return http({
+    method: 'PUT',
+    url: '/member/profile',
+    data,
+  })
+}

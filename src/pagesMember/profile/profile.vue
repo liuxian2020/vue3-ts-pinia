@@ -1,15 +1,33 @@
 <script setup lang="ts">
-import { getMemberProfileApi } from '@/services/profile'
+import { getMemberProfileApi, putMemberProfileApi } from '@/services/profile'
 import { onLoad } from '@dcloudio/uni-app'
-import type { ProfileDetail } from '@/types/login'
+import type { ProfileDetail, Gender } from '@/types/login'
 import { ref } from 'vue'
+import { useMemberStore } from '@/stores/index'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
-const profileInfo = ref<ProfileDetail>()
+const profileInfo = ref({} as ProfileDetail)
 const getMemberProfileData = () => {
   getMemberProfileApi().then((res) => {
     profileInfo.value = res.result
   })
+}
+const handleSubmit = () => {
+  putMemberProfileApi(profileInfo.value).then((res) => {
+    uni.navigateBack()
+    const memberStore = useMemberStore()
+    memberStore.setProfile(profileInfo.value)
+    uni.showToast({
+      icon: 'success',
+      message: '提交成功',
+    })
+  })
+}
+const handleRadio: UniHelper.RadioGroupOnChange = (val) => {
+  profileInfo.value.gender = val.detail.value as Gender
+}
+const handlePicker: UniHelper.PickerViewOnChange = (val) => {
+  profileInfo.value.birthday = val.detail.value
 }
 onLoad(() => {
   getMemberProfileData()
@@ -40,11 +58,11 @@ onLoad(() => {
         </view>
         <view class="form-item">
           <text class="label">昵称</text>
-          <input class="input" type="text" placeholder="请填写昵称" :value="profileInfo?.nickname" />
+          <input class="input" type="text" placeholder="请填写昵称" v-model="profileInfo!.nickname" />
         </view>
         <view class="form-item">
           <text class="label">性别</text>
-          <radio-group>
+          <radio-group @change="handleRadio">
             <label class="radio">
               <radio value="男" color="#27ba9b" :checked="profileInfo?.gender === '男'" />
               男
@@ -57,7 +75,8 @@ onLoad(() => {
         </view>
         <view class="form-item">
           <text class="label">生日</text>
-          <picker class="picker" mode="date" start="1900-01-01" :end="new Date()" :value="profileInfo?.birthday">
+          <picker class="picker" @change="handlePicker" mode="date" start="1900-01-01" :end="new Date()"
+            :value="profileInfo?.birthday">
             <view v-if="profileInfo">{{ profileInfo.birthday }}</view>
             <view class="placeholder" v-else>请选择日期</view>
           </picker>
@@ -71,11 +90,11 @@ onLoad(() => {
         </view>
         <view class="form-item">
           <text class="label">职业</text>
-          <input class="input" type="text" placeholder="请填写职业" :value="profileInfo?.profession" />
+          <input class="input" type="text" placeholder="请填写职业" v-model="profileInfo!.profession" />
         </view>
       </view>
       <!-- 提交按钮 -->
-      <button class="form-button">保 存</button>
+      <button class="form-button" @tap="handleSubmit">保 存</button>
     </view>
   </view>
 </template>

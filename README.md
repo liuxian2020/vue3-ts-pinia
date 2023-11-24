@@ -8,6 +8,7 @@
 3、使用 pinia 进行持久化存储
 4、大图预览 uni.previewImage
 5、分包加载 preload
+6、navigateBack 页面跳转
 
 ### 技术栈
 

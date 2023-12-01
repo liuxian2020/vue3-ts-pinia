@@ -2,13 +2,15 @@
 
 小兔鲜儿项目包含从首页浏览商品，商品详情，微信登录，加入购物车，提交订单，微信支付，订单管理等功能。
 
-技术特点：
+技术记录：
 1、uni-app 项目组件通过 pages.json 中的 easycom 的 custom 属性进行全局引入
 2、封装统一的 http 请求函数
 3、使用 pinia 进行持久化存储
 4、大图预览 uni.previewImage
 5、分包加载 preload
 6、navigateBack 页面跳转
+7、navigationStyle: "custom" 自定义导航样式
+8、uni.setNavigationBarTitle 动态修改导航栏标题
 
 ### 技术栈
 

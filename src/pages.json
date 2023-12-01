@@ -106,8 +106,20 @@
 				{
 					"path": "profile/profile",
 					"style": {
-            "navigationStyle": "custom",
+						"navigationStyle": "custom",
 						"navigationBarTitleText": "会员页面"
+					}
+				},
+				{
+					"path": "address/address",
+					"style": {
+						"navigationBarTitleText": "地址管理"
+					}
+				},
+				{
+					"path": "address-form/address-form",
+					"style": {
+						"navigationBarTitleText": "地址项"
 					}
 				}
 			]
